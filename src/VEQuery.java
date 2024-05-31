@@ -31,4 +31,14 @@ public class VEQuery {
     public List<Character> getOrder() {
         return order;
     }
+
+    @Override
+    public String toString() {
+        return "VEQuery{" +
+                "query=" + query +
+                ", queryValue=" + queryValue +
+                ", given=" + given +
+                ", order=" + order +
+                '}';
+    }
 }

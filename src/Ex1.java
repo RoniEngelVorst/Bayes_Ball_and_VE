@@ -3,9 +3,15 @@
 public class Ex1 {
     public static void main(String[] args) {
         // Path to the XML file
-        String filePath = "alarm_net.xml";
+        inputParser parser = new inputParser();
+        parser.parseFile("input.txt");
 
-        BayesianNetwork bn = NetworkBuilder.XML_To_Network(filePath);
+        // Output the results
+        System.out.println("XML File Name: " + parser.getXmlFileName());
+        System.out.println("BayesBall Queries: " + parser.getBayesBallQueries());
+        System.out.println("Variable Elimination Queries: " + parser.getVariableEliminationQueries());
+
+        BayesianNetwork bn = NetworkBuilder.XML_To_Network(parser.getXmlFileName());
         bn.printNetwork();
     }
 }

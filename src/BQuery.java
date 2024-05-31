@@ -23,4 +23,14 @@ public class BQuery {
     public List<Character> getEvidence() {
         return evidence;
     }
+
+    @Override
+    public String toString() {
+        return "BQuery{" +
+                "variable1=" + variable1 +
+                ", variable2=" + variable2 +
+                ", evidence=" + evidence +
+                '}';
+    }
 }
+

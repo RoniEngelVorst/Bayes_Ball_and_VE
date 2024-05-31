@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.*;
 
 class BayesianNetwork {
@@ -19,6 +20,7 @@ class BayesianNetwork {
         BNode child = nodes.get(childName);
         if (parent != null && child != null) {
             child.addParent(parent);
+            parent.addSon(child);
         }
     }
 
@@ -36,6 +38,10 @@ class BayesianNetwork {
             System.out.print("Parents: ");
             for (BNode parent : node.getParents()) {
                 System.out.print(parent.getName() + " ");
+            }
+            System.out.print("Sons:");
+            for(BNode son : node.getSons()){
+                System.out.print(son.getName() + " ");
             }
             System.out.println();
             System.out.println("CPT:");
