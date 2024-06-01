@@ -1,26 +1,27 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BQuery {
-    private char variable1;
-    private char variable2;
-    private List<Character> evidence  = new ArrayList<>();
 
-    public BQuery(char v1, char v2, List<Character> e){
+public class BQuery {
+    private String variable1;
+    private String variable2;
+    private List<String> evidence  = new ArrayList<>();
+
+    public BQuery(String v1, String v2, List<String> e){
         this.variable1 = v1;
         this.variable2 = v2;
         this.evidence = e;
     }
 
-    public char getVariable1() {
+    public String getVariable1() {
         return variable1;
     }
 
-    public char getVariable2() {
+    public String getVariable2() {
         return variable2;
     }
 
-    public List<Character> getEvidence() {
+    public List<String> getEvidence() {
         return evidence;
     }
 

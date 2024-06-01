@@ -45,13 +45,15 @@ public class inputParser {
     private BQuery parseBayesBallQuery(String line) {
         String[] parts = line.split("\\|");
         String[] variables = parts[0].split("-");
-        char v1 = variables[0].charAt(0);
-        char v2 = variables[1].charAt(0);
-        List<Character> evidence = new ArrayList<>();
+        String v1 = variables[0];
+        String v2 = variables[1];
+        List<String> evidence = new ArrayList<>();
         if (parts.length > 1) {
-            for (char c : parts[1].toCharArray()) {
-                if (c != '=') {
-                    evidence.add(c);
+            // Split the evidence part by commas or another delimiter
+            String[] evidenceParts = parts[1].split(",");
+            for (String c : evidenceParts) {
+                if (!c.equals("=")) {
+                    evidence.add(c.trim()); // Add trimmed evidence strings
                 }
             }
         }

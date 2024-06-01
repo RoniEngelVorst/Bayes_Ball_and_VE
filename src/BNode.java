@@ -6,6 +6,7 @@ public class BNode {
     private List<BNode> sons;
     private List<BNode> parents;
     private Map<String, Double> cpt;
+    private boolean isEvidence;
 
     public BNode(String name, List<String> outcomes) {
         this.name = name;
@@ -13,6 +14,7 @@ public class BNode {
         this.sons = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.cpt = new HashMap<>();
+        this.isEvidence = false;
     }
 
     public String getName() {
@@ -31,6 +33,10 @@ public class BNode {
         return parents;
     }
 
+    public boolean isEvidence() {
+        return isEvidence;
+    }
+
     public void addSon(BNode son){
         sons.add(son);
     }
@@ -45,6 +51,10 @@ public class BNode {
 
     public Double getProbability(String condition) {
         return cpt.get(condition);
+    }
+
+    public void setEvidence(boolean evidence) {
+        isEvidence = evidence;
     }
 
     public Map<String, Double> getProbabilityTable() {
