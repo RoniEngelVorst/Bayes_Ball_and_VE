@@ -3,6 +3,8 @@ import java.util.*;
 
 class BayesianNetwork {
     private Map<String, BNode> nodes;
+    private List<BNode> nodeList = new ArrayList<>();
+
 
     public BayesianNetwork() {
         nodes = new HashMap<>();
@@ -10,7 +12,14 @@ class BayesianNetwork {
 
     public void addNode(BNode node) {
         nodes.put(node.getName(), node);
+        nodeList.add(node);
     }
+
+    public List<BNode> getNodeList(){
+        return nodeList;
+    }
+
+
 
     public BNode getNode(String name) {
         return nodes.get(name);
@@ -46,19 +55,22 @@ class BayesianNetwork {
             System.out.println();
             System.out.println("CPT:");
 
-            List<String> parentNames = new ArrayList<>();
-            for (BNode parent : node.getParents()) {
-                parentNames.add(parent.getName());
-            }
-
-            // Generate all combinations of parent outcomes
-            List<String> combinations = generateCombinations(parentNames, node.getOutcomes());
-            for (String combination : combinations) {
-                System.out.println(" " + combination + ": " + node.getProbability(combination));
-            }
-            System.out.println();
+//            List<String> parentNames = new ArrayList<>();
+//            for (BNode parent : node.getParents()) {
+//                parentNames.add(parent.getName());
+//            }
+//
+//            // Generate all combinations of parent outcomes
+//            List<String> combinations = generateCombinations(parentNames, node.getOutcomes());
+//            for (String combination : combinations) {
+//                System.out.println(" " + combination + ": " + node.getProbability(combination));
+//            }
+//            System.out.println();
+            node.printCptTable();
         }
     }
+
+
 
     private List<String> generateCombinations(List<String> parentNames, List<String> outcomes) {
         if (parentNames.isEmpty()) {
