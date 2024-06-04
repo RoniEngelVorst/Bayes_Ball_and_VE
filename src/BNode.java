@@ -8,6 +8,7 @@ public class BNode {
     private Map<String, Double> cpt;
     private Map<Map<String, String>, Double> cptTable = new HashMap<>();
     private boolean isEvidence;
+    private boolean isFromChild;
     public int p = 0;
 
     public BNode(String name, List<String> outcomes) {
@@ -35,6 +36,13 @@ public class BNode {
         return parents;
     }
 
+    public boolean isFromChild() {
+        return isFromChild;
+    }
+
+    public void setFromChild(boolean fromChild) {
+        isFromChild = fromChild;
+    }
 
     public boolean isEvidence() {
         return isEvidence;

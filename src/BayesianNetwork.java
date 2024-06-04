@@ -70,6 +70,12 @@ class BayesianNetwork {
         }
     }
 
+    public void clearEvidence(){
+        for(int i = 0; i<this.nodeList.size(); i++){
+            this.nodeList.get(i).setEvidence(false);
+        }
+    }
+
 
 
     private List<String> generateCombinations(List<String> parentNames, List<String> outcomes) {
