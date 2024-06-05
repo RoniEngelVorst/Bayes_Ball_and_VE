@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VEQuery {
-    private char query;
+    private String query;
     private boolean queryValue;
-    private Map<Character, Boolean> given = new HashMap<>();
-    private List<Character> order  = new ArrayList<>();
+    private Map<String, Boolean> given = new HashMap<>();
+    private List<String> order  = new ArrayList<>();
 
-    public VEQuery(char q, boolean qv, Map<Character, Boolean> g, List<Character> o){
+    public VEQuery(String q, boolean qv, Map<String, Boolean> g, List<String> o){
         this.query = q;
         this.queryValue = qv;
         this.given = g;
         this.order = o;
     }
 
-    public char getQuery() {
+    public String getQuery() {
         return query;
     }
 
@@ -24,11 +24,11 @@ public class VEQuery {
         return queryValue;
     }
 
-    public Map<Character, Boolean> getGiven() {
+    public Map<String, Boolean> getGiven() {
         return given;
     }
 
-    public List<Character> getOrder() {
+    public List<String> getOrder() {
         return order;
     }
 

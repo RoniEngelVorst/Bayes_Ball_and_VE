@@ -3,11 +3,12 @@ import java.util.*;
 
 class BayesianNetwork {
     private Map<String, BNode> nodes;
-    private List<BNode> nodeList = new ArrayList<>();
+    private List<BNode> nodeList;
 
 
     public BayesianNetwork() {
         nodes = new HashMap<>();
+        nodeList = new ArrayList<>();
     }
 
     public void addNode(BNode node) {
@@ -76,30 +77,43 @@ class BayesianNetwork {
         }
     }
 
-
-
-    private List<String> generateCombinations(List<String> parentNames, List<String> outcomes) {
-        if (parentNames.isEmpty()) {
-            return outcomes;
-        } else {
-            List<String> combinations = new ArrayList<>();
-            generateCombinationsRecursive(parentNames, outcomes, "", combinations);
-            return combinations;
+    public List<BNode> onlyAncestors(VEQuery q){
+        Set<BNode> ancestors = new HashSet<>();
+        BNode query = this.getNode(q.getQuery());
+        for(Map.Entry<String, Boolean> entry : q.getGiven().entrySet()){
+            String key = entry.getKey();
+            ancestors.add(this.getNode(key));
+            ancestors.addAll(this.getNode(key).getAncestors());
         }
+        ancestors.addAll(query.getAncestors());
+        ancestors.add(query);
+        return ancestors.stream().toList();
     }
 
-    private void generateCombinationsRecursive(List<String> parentNames, List<String> outcomes, String prefix, List<String> combinations) {
-        if (parentNames.isEmpty()) {
-            for (String outcome : outcomes) {
-                combinations.add(prefix + outcome);
-            }
-        } else {
-            String parentName = parentNames.get(0);
-            List<String> remainingParentNames = parentNames.subList(1, parentNames.size());
-            for (String parentOutcome : nodes.get(parentName).getOutcomes()) {
-                generateCombinationsRecursive(remainingParentNames, outcomes, prefix + parentOutcome + ",", combinations);
-            }
-        }
-    }
+
+
+//    private List<String> generateCombinations(List<String> parentNames, List<String> outcomes) {
+//        if (parentNames.isEmpty()) {
+//            return outcomes;
+//        } else {
+//            List<String> combinations = new ArrayList<>();
+//            generateCombinationsRecursive(parentNames, outcomes, "", combinations);
+//            return combinations;
+//        }
+//    }
+//
+//    private void generateCombinationsRecursive(List<String> parentNames, List<String> outcomes, String prefix, List<String> combinations) {
+//        if (parentNames.isEmpty()) {
+//            for (String outcome : outcomes) {
+//                combinations.add(prefix + outcome);
+//            }
+//        } else {
+//            String parentName = parentNames.get(0);
+//            List<String> remainingParentNames = parentNames.subList(1, parentNames.size());
+//            for (String parentOutcome : nodes.get(parentName).getOutcomes()) {
+//                generateCombinationsRecursive(remainingParentNames, outcomes, prefix + parentOutcome + ",", combinations);
+//            }
+//        }
+//    }
 
 }

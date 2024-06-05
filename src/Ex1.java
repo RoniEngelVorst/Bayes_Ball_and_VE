@@ -30,9 +30,11 @@ public class Ex1 {
         BQuery q2 = new BQuery("B","E",e2);
         BQuery q3 = new BQuery("J","E",e3);
 
-        BayesBall.isIndependent(bn, q1);
-        BayesBall.isIndependent(bn, q2);
-        BayesBall.isIndependent(bn, q3);
+        System.out.println(BayesBall.isIndependent(bn, q1));
+        System.out.println(BayesBall.isIndependent(bn, q2));
+        System.out.println(BayesBall.isIndependent(bn, q3));
+
+
 
 
     }

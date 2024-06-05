@@ -6,7 +6,7 @@ import java.util.Set;
 public class BayesBall {
 
 
-    public static void isIndependent(BayesianNetwork bn, BQuery q){
+    public static String isIndependent(BayesianNetwork bn, BQuery q){
         Queue<BNode> vars = new LinkedList<>();
         Set<BNode> visited = new HashSet<>();
         //'coloring' the evidences
@@ -55,12 +55,13 @@ public class BayesBall {
             }
         }
         //end of while loop
+        bn.clearEvidence();
         boolean ans = !visited.contains(bn.getNode(q.getVariable2()));
         if(ans == false){
-            System.out.println("No");
+            return "No";
         }
         else{
-            System.out.println("Yes");
+            return "Yes";
         }
     }
 

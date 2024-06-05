@@ -68,6 +68,21 @@ public class BNode {
         isEvidence = evidence;
     }
 
+    // Method to get all ancestors
+    public Set<BNode> getAncestors() {
+        Set<BNode> ancestors = new HashSet<>();
+        collectAncestors(this, ancestors);
+        return ancestors;
+    }
+
+    private void collectAncestors(BNode node, Set<BNode> ancestors) {
+        for (BNode parent : node.getParents()) {
+            if (ancestors.add(parent)) { // If the parent was added, continue to collect its ancestors
+                collectAncestors(parent, ancestors);
+            }
+        }
+    }
+
     public void P_To_Zero() {
         this.p = 0;
     }

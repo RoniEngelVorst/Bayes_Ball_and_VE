@@ -67,25 +67,25 @@ public class inputParser {
 
         // Extract the query variable and its value
         String[] queryVarParts = queryParts[0].split("=");
-        char queryVar = queryVarParts[0].charAt(0);
+        String queryVar = queryVarParts[0];
         boolean queryValue = queryVarParts[1].equals("T");
 
         // Extract the given variables and their values
-        Map<Character, Boolean> given = new HashMap<>();
+        Map<String, Boolean> given = new HashMap<>();
         if (queryParts.length > 1) {
             String[] givenParts = queryParts[1].split(",");
             for (String g : givenParts) {
                 String[] varParts = g.split("=");
-                given.put(varParts[0].charAt(0), varParts[1].equals("T"));
+                given.put(varParts[0], varParts[1].equals("T"));
             }
         }
 
         // Extract the elimination order
-        List<Character> order = new ArrayList<>();
+        List<String> order = new ArrayList<>();
         if (parts.length > 1) {
             for (char c : parts[1].toCharArray()) {
                 if (c != '-' && c != ' ' && c != '>') {
-                    order.add(c);
+                    order.add(String.valueOf(c));
                 }
             }
         }
