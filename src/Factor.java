@@ -188,6 +188,28 @@ public Factor join(Factor otherFactor) {
         return combinedAssignment;
     }
 
+    public Factor eliminateHidden(String h){
+        Map<Map<String, String>, Double> newCpt = new HashMap<>();
+        Map<String, BNode> newVars = this.vars;
+        newVars.remove(h);
+        for (Map.Entry<Map<String, String>, Double> entry : this.cptTable.entrySet()) {
+            Map<String, String> key = entry.getKey();
+            key.remove(h);
+            newCpt.put(key, newCpt.getOrDefault(key, 0d) + entry.getValue());
+        }
+        return new Factor(newVars, newCpt);
+    }
+
+    public void normalize(){
+        double sum = 0;
+        for (Map.Entry<Map<String, String>, Double> entry : this.cptTable.entrySet()) {
+            sum = sum + entry.getValue();
+        }
+        for (Map.Entry<Map<String, String>, Double> entry : this.cptTable.entrySet()) {
+            entry.setValue(entry.getValue()/sum);
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -205,6 +227,7 @@ public Factor join(Factor otherFactor) {
 
     @Override
     public int compareTo(Factor o) {
-        return 0;
+        int numVarsComparison = Integer.compare(this.vars.size(), o.vars.size());
+        return  numVarsComparison;
     }
 }

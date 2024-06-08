@@ -54,6 +54,14 @@ public class Ex1 {
         Factor joinedFactor = MFactor.join(JFactor);
         System.out.println(joinedFactor);
 
+        System.out.println("Eliminating A: ");
+        Factor eliminateA = joinedFactor.eliminateHidden("A");
+        System.out.println(eliminateA);
+
+        System.out.println("normalized: ");
+        eliminateA.normalize();
+        System.out.println(eliminateA);
+
 
 
 
