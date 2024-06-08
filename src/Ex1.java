@@ -35,6 +35,26 @@ public class Ex1 {
         System.out.println(BayesBall.isIndependent(bn, q3));
 
 
+        Map<String, BNode> vars = new HashMap<>();
+        vars.put("A",bn.getNode("A"));
+        vars.put("M", bn.getNode("M"));
+
+        Factor MFactor = new Factor(vars, bn.getNode("M").getCptTable());
+
+        Map<String, BNode> vars2 = new HashMap<>();
+        vars.put("A",bn.getNode("A"));
+        vars.put("J", bn.getNode("J"));
+
+        Factor JFactor = new Factor(vars2, bn.getNode("J").getCptTable());
+
+        System.out.println(MFactor);
+        System.out.println(JFactor);
+        System.out.println("joined factor: ");
+
+        Factor joinedFactor = MFactor.join(JFactor);
+        System.out.println(joinedFactor);
+
+
 
 
     }
