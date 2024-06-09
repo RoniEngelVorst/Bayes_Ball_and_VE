@@ -36,6 +36,15 @@ public class BNode {
         return parents;
     }
 
+    public Map<String, BNode> getVars(){
+        Map<String, BNode> vars = new HashMap<>();
+        vars.put(this.getName(), this);
+        for(BNode p : this.getParents()){
+            vars.put(p.getName(), p);
+        }
+        return vars;
+    }
+
     public boolean isFromChild() {
         return isFromChild;
     }

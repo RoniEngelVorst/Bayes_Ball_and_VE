@@ -48,12 +48,22 @@ public class inputParser {
         String v1 = variables[0];
         String v2 = variables[1];
         List<String> evidence = new ArrayList<>();
+//        if (parts.length > 1) {
+//            // Split the evidence part by commas or another delimiter
+//            String[] evidenceParts = parts[1].split(",");
+//            for (String c : evidenceParts) {
+//                if (!c.equals("=")) {
+//                    evidence.add(c.trim()); // Add trimmed evidence strings
+//                }
+//            }
+//        }
         if (parts.length > 1) {
             // Split the evidence part by commas or another delimiter
             String[] evidenceParts = parts[1].split(",");
-            for (String c : evidenceParts) {
-                if (!c.equals("=")) {
-                    evidence.add(c.trim()); // Add trimmed evidence strings
+            for (String part : evidenceParts) {
+                String[] variableAndValue = part.trim().split("=");
+                if (variableAndValue.length > 0) {
+                    evidence.add(variableAndValue[0]); // Add only the variable name
                 }
             }
         }
@@ -68,15 +78,15 @@ public class inputParser {
         // Extract the query variable and its value
         String[] queryVarParts = queryParts[0].split("=");
         String queryVar = queryVarParts[0];
-        boolean queryValue = queryVarParts[1].equals("T");
+        String queryValue = queryVarParts[1];
 
         // Extract the given variables and their values
-        Map<String, Boolean> given = new HashMap<>();
+        Map<String, String> given = new HashMap<>();
         if (queryParts.length > 1) {
             String[] givenParts = queryParts[1].split(",");
             for (String g : givenParts) {
                 String[] varParts = g.split("=");
-                given.put(varParts[0], varParts[1].equals("T"));
+                given.put(varParts[0], varParts[1]);
             }
         }
 

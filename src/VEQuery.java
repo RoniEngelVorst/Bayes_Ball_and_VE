@@ -5,11 +5,11 @@ import java.util.List;
 
 public class VEQuery {
     private String query;
-    private boolean queryValue;
-    private Map<String, Boolean> given = new HashMap<>();
+    private String queryValue;
+    private Map<String, String> given = new HashMap<>();
     private List<String> order  = new ArrayList<>();
 
-    public VEQuery(String q, boolean qv, Map<String, Boolean> g, List<String> o){
+    public VEQuery(String q, String qv, Map<String, String> g, List<String> o){
         this.query = q;
         this.queryValue = qv;
         this.given = g;
@@ -20,11 +20,11 @@ public class VEQuery {
         return query;
     }
 
-    public boolean isQueryValue() {
+    public String isQueryValue() {
         return queryValue;
     }
 
-    public Map<String, Boolean> getGiven() {
+    public Map<String, String> getGiven() {
         return given;
     }
 

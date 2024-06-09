@@ -80,7 +80,7 @@ class BayesianNetwork {
     public List<BNode> onlyAncestors(VEQuery q){
         Set<BNode> ancestors = new HashSet<>();
         BNode query = this.getNode(q.getQuery());
-        for(Map.Entry<String, Boolean> entry : q.getGiven().entrySet()){
+        for(Map.Entry<String, String> entry : q.getGiven().entrySet()){
             String key = entry.getKey();
             ancestors.add(this.getNode(key));
             ancestors.addAll(this.getNode(key).getAncestors());

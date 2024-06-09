@@ -20,28 +20,23 @@ public class Factor implements Comparable<Factor>{
     }
 
     public double getProbability(Map<String, String> key){
-        return this.cptTable.get(key);
+        Double probability = this.cptTable.get(key);
+        if (probability != null) {
+            return probability; // Return the probability if it exists
+        } else {
+            // Handle the case where the key does not exist
+            throw new IllegalArgumentException("Key not found in CPT table: " + key);
+        }
     }
 
-    public Set<String> getPossibleOutcomes(){
-        Set<String> outcomes = new HashSet<>();
-        for (Map.Entry<Map<String, String>, Double> outerEntry : this.cptTable.entrySet()) {
-            for(Map.Entry<String, String> innerEntry : outerEntry.getKey().entrySet()){
-                outcomes.add(innerEntry.getValue());
-            }
-        }
-        return outcomes;
+    public int getSize(){
+        int size = this.cptTable.size();
+        return size;
+
     }
 
-    public Set<String> getPossibleOutcomesForVariable(String variable) {
-        Set<String> outcomes = new HashSet<>();
-        for (Map.Entry<Map<String, String>, Double> outerEntry : this.cptTable.entrySet()) {
-            Map<String, String> innerMap = outerEntry.getKey();
-            if (innerMap.containsKey(variable)) {
-                outcomes.add(innerMap.get(variable));
-            }
-        }
-        return outcomes;
+    public boolean containsVariable(String h) {
+        return this.vars.containsKey(h);
     }
 
     public Factor PlaceGiven(Map<String, String> given){
@@ -100,53 +95,6 @@ public class Factor implements Comparable<Factor>{
     }
 
 
-
-//    public static Factor join(Factor A, Factor B){
-//        Map<String, BNode> newVars = new HashMap<>();
-//        newVars.putAll(A.getVars());
-//        newVars.putAll(B.getVars());
-//        Map<Map<String, String>, Double> newCptTable = new HashMap<>();
-////        List<String> allPossibleOutcomes = new ArrayList<>();
-////        allPossibleOutcomes.addAll(A.getPossibleOutcomes());
-////        allPossibleOutcomes.addAll(B.getPossibleOutcomes());
-//
-//        // Iterate over each entry in factor A
-//        for (Map.Entry<Map<String, String>, Double> entryA : A.getCptTable().entrySet()) {
-//            // Iterate over each entry in factor B
-//            for (Map.Entry<Map<String, String>, Double> entryB : B.getCptTable().entrySet()) {
-//                // Check if the assignments in entryA and entryB are compatible
-//                if (areCompatibleAssignments(entryA.getKey(), entryB.getKey())) {
-//                    // Multiply the probabilities and add the entry to the newCptTable
-//                    Map<String, String> combinedAssignment = combineAssignments(entryA.getKey(), entryB.getKey());
-//                    double combinedProbability = entryA.getValue() * entryB.getValue();
-//                    newCptTable.put(combinedAssignment, combinedProbability);
-//                }
-//            }
-//        }
-//
-//        return new Factor(newVars, newCptTable);
-//    }
-//
-//    // Helper method to check if two assignments are compatible (have the same values for shared variables)
-//    private static boolean areCompatibleAssignments(Map<String, String> assignmentA, Map<String, String> assignmentB) {
-//        for (Map.Entry<String, String> entryA : assignmentA.entrySet()) {
-//            String variable = entryA.getKey();
-//            String valueA = entryA.getValue();
-//            String valueB = assignmentB.get(variable);
-//            if (valueB != null && !valueB.equals(valueA)) {
-//                return false; // Incompatible assignment found
-//            }
-//        }
-//        return true; // Assignments are compatible
-//    }
-//
-//    // Helper method to combine two assignments into a single assignment
-//    private static Map<String, String> combineAssignments(Map<String, String> assignmentA, Map<String, String> assignmentB) {
-//        Map<String, String> combinedAssignment = new HashMap<>(assignmentA);
-//        combinedAssignment.putAll(assignmentB); // Overwrites values in assignmentA with those from assignmentB if they share variables
-//        return combinedAssignment;
-//    }
-//}
 public Factor join(Factor otherFactor) {
     Map<String, BNode> newVars = new HashMap<>(this.vars);
     newVars.putAll(otherFactor.vars);
@@ -228,6 +176,14 @@ public Factor join(Factor otherFactor) {
     @Override
     public int compareTo(Factor o) {
         int numVarsComparison = Integer.compare(this.vars.size(), o.vars.size());
-        return  numVarsComparison;
+        if (numVarsComparison != 0) {
+            return numVarsComparison;
+        }
+
+        // If the number of variables is the same, compare by the ASCII value of the first variable name
+        String thisFirstVarName = this.vars.keySet().iterator().next();
+        String otherFirstVarName = o.vars.keySet().iterator().next();
+
+        return thisFirstVarName.compareTo(otherFirstVarName);
     }
 }
