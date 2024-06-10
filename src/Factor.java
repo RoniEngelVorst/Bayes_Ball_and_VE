@@ -43,6 +43,10 @@ public class Factor implements Comparable<Factor>{
         Map<Map<String, String>, Double> newCpt = new HashMap<>();
         Map<String, BNode> newVars = new HashMap<>();
 
+        if(this.isOneLine() && given.containsKey(this.vars.keySet().iterator().next())){
+            return null;
+        }
+
         // Iterate over the cptTable to filter entries based on the given map
         for (Map.Entry<Map<String, String>, Double> outerEntry : this.cptTable.entrySet()) {
             Map<String, String> innerMap = outerEntry.getKey();

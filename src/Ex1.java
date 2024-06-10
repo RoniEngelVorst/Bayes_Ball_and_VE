@@ -23,7 +23,9 @@ public class Ex1 {
                 writer.write(output + "\n");
             }
             for(VEQuery veq : parser.getVariableEliminationQueries()){
+                System.out.println("ve query: " + veq);
                 String output = VariableElimination.VE(veq, bn);
+                System.out.println(output);
                 writer.write(output+ "\n");
             }
 
@@ -31,42 +33,42 @@ public class Ex1 {
             e.printStackTrace();
         }
 
-        // Output the results
-        System.out.println("XML File Name: " + parser.getXmlFileName());
-        System.out.println("BayesBall Queries: " + parser.getBayesBallQueries());
-        System.out.println("Variable Elimination Queries: " + parser.getVariableEliminationQueries());
-
-//        BayesianNetwork bn = NetworkBuilder.XML_To_Network(parser.getXmlFileName());
-
-
-        List<String> e1 = new ArrayList<>();
-        List<String> e2 = new ArrayList<>();
-        e2.add("J");
-        List<String> e3 = new ArrayList<>();
-        e3.add("A");
-
-
-
-        BQuery q1 = new BQuery("B","E",e1);
-        BQuery q2 = new BQuery("B","E",e2);
-        BQuery q3 = new BQuery("J","E",e3);
-
-        System.out.println(BayesBall.isIndependent(bn, q1));
-        System.out.println(BayesBall.isIndependent(bn, q2));
-        System.out.println(BayesBall.isIndependent(bn, q3));
-
-        Map<String, String> given = new HashMap<>();
-        given.put("J", "T");
-        given.put("M", "T");
-        List<String> order = new ArrayList<>();
-        order.add("A");
-        order.add("E");
-
-
-        VEQuery q = new VEQuery("B", "T", given, order);
-
-        System.out.println(VariableElimination.VE(q, bn));
-
+//        // Output the results
+//        System.out.println("XML File Name: " + parser.getXmlFileName());
+//        System.out.println("BayesBall Queries: " + parser.getBayesBallQueries());
+//        System.out.println("Variable Elimination Queries: " + parser.getVariableEliminationQueries());
+//
+////        BayesianNetwork bn = NetworkBuilder.XML_To_Network(parser.getXmlFileName());
+//
+//
+//        List<String> e1 = new ArrayList<>();
+//        List<String> e2 = new ArrayList<>();
+//        e2.add("J");
+//        List<String> e3 = new ArrayList<>();
+//        e3.add("A");
+//
+//
+//
+//        BQuery q1 = new BQuery("B","E",e1);
+//        BQuery q2 = new BQuery("B","E",e2);
+//        BQuery q3 = new BQuery("J","E",e3);
+//
+//        System.out.println(BayesBall.isIndependent(bn, q1));
+//        System.out.println(BayesBall.isIndependent(bn, q2));
+//        System.out.println(BayesBall.isIndependent(bn, q3));
+//
+//        Map<String, String> given = new HashMap<>();
+//        given.put("J", "T");
+//        given.put("M", "T");
+//        List<String> order = new ArrayList<>();
+//        order.add("A");
+//        order.add("E");
+//
+//
+//        VEQuery q = new VEQuery("B", "T", given, order);
+//
+//        System.out.println(VariableElimination.VE(q, bn));
+//
 
 //        Map<String, BNode> vars = new HashMap<>();
 //        vars.put("A",bn.getNode("A"));

@@ -18,6 +18,7 @@ public class VariableElimination {
             Factor newFactor = new Factor(node.getVars(), node.getCptTable());
             Factors.add(newFactor);
         }
+        System.out.println("factors: " +Factors);
 
 
         Map<String, String> givenMap = q.getGiven();
@@ -25,7 +26,10 @@ public class VariableElimination {
         // Apply the PlaceGiven method to each element in the list using Stream
         List<Factor> modifiedFactors = Factors.stream()
                 .map(factor -> factor.PlaceGiven(givenMap))
+                .filter(Objects::nonNull)
                 .toList();
+
+        System.out.println("modifiedFactors: "+ modifiedFactors);
 
 
         List<Factor> toLoopFactors = new ArrayList<>(modifiedFactors);
@@ -52,6 +56,7 @@ public class VariableElimination {
                     .toList();
 
             toLoopFactors.removeAll(factorsContainingH);
+            System.out.println("toLoopFactors: " + toLoopFactors);
 
 
             List<Factor> sortedHList = new ArrayList<>(factorsContainingH);
@@ -74,6 +79,8 @@ public class VariableElimination {
             //eliminate h from the result factor
             Factor eliminatedFactor = joinedFactor.eliminateHidden(h);
             int sumActs = eliminatedFactor.getSize();
+            System.out.println("eliminated factor: ");
+            System.out.println(eliminatedFactor);
             System.out.println("eliminating. number of sum acts: " + sumActs);
             sumCounter = sumCounter + sumActs;
 
@@ -86,9 +93,15 @@ public class VariableElimination {
 
         }
 
+        System.out.println("final join");
+        System.out.println("toLoopFactors size: " + toLoopFactors.size());
+        System.out.println(toLoopFactors);
         while (toLoopFactors.size() > 1) {
             Factor temp = toLoopFactors.removeFirst().join(toLoopFactors.removeFirst());
             toLoopFactors.add(temp);
+            multyCounter = multyCounter + temp.getSize();
+            System.out.println(temp);
+            System.out.println("temp factor size: " + temp.getSize());
         }
         Factor resultFactor = toLoopFactors.getFirst();
 
