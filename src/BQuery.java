@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BQuery {
+public class BQuery implements Query{
     private String variable1;
     private String variable2;
     private List<String> evidence  = new ArrayList<>();

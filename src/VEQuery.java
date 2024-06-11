@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VEQuery {
+public class VEQuery implements Query {
     private String query;
     private String queryValue;
     private Map<String, String> given = new HashMap<>();

@@ -17,86 +17,87 @@ public class Ex1 {
 
         // Write the output string to a file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
-            for(BQuery bq : parser.getBayesBallQueries()){
-                System.out.println(bq);
-                String output = BayesBall.isIndependent(bn, bq);
-                writer.write(output + "\n");
-            }
-            for(VEQuery veq : parser.getVariableEliminationQueries()){
-                System.out.println("ve query: " + veq);
-                String output = VariableElimination.VE(veq, bn);
-                System.out.println(output);
-                writer.write(output+ "\n");
+            for (Query query : parser.getQueries()) {
+                if (query instanceof BQuery) {
+                    BQuery bQuery = (BQuery) query;
+                    String output = BayesBall.isIndependent(bn, bQuery);
+                    writer.write(output + "\n");
+                    // Process BQuery
+                    System.out.println("BayesBall Query: " + bQuery);
+                } else if (query instanceof VEQuery) {
+                    VEQuery veQuery = (VEQuery) query;
+                    String output = VariableElimination.VE(veQuery, bn);
+                    writer.write(output + "\n");
+                    // Process VEQuery
+                    System.out.println("Variable Elimination Query: " + veQuery);
+                }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-//        // Output the results
-//        System.out.println("XML File Name: " + parser.getXmlFileName());
-//        System.out.println("BayesBall Queries: " + parser.getBayesBallQueries());
-//        System.out.println("Variable Elimination Queries: " + parser.getVariableEliminationQueries());
-//
-////        BayesianNetwork bn = NetworkBuilder.XML_To_Network(parser.getXmlFileName());
-//
-//
-//        List<String> e1 = new ArrayList<>();
-//        List<String> e2 = new ArrayList<>();
-//        e2.add("J");
-//        List<String> e3 = new ArrayList<>();
-//        e3.add("A");
-//
-//
-//
-//        BQuery q1 = new BQuery("B","E",e1);
-//        BQuery q2 = new BQuery("B","E",e2);
-//        BQuery q3 = new BQuery("J","E",e3);
-//
-//        System.out.println(BayesBall.isIndependent(bn, q1));
-//        System.out.println(BayesBall.isIndependent(bn, q2));
-//        System.out.println(BayesBall.isIndependent(bn, q3));
-//
-//        Map<String, String> given = new HashMap<>();
-//        given.put("J", "T");
-//        given.put("M", "T");
-//        List<String> order = new ArrayList<>();
-//        order.add("A");
-//        order.add("E");
-//
-//
-//        VEQuery q = new VEQuery("B", "T", given, order);
-//
-//        System.out.println(VariableElimination.VE(q, bn));
-//
 
-//        Map<String, BNode> vars = new HashMap<>();
-//        vars.put("A",bn.getNode("A"));
-//        vars.put("M", bn.getNode("M"));
-//
-//        Factor MFactor = new Factor(vars, bn.getNode("M").getCptTable());
-//
-//        Map<String, BNode> vars2 = new HashMap<>();
-//        vars.put("A",bn.getNode("A"));
-//        vars.put("J", bn.getNode("J"));
-//
-//        Factor JFactor = new Factor(vars2, bn.getNode("J").getCptTable());
-//
-//        System.out.println(MFactor);
-//        System.out.println(JFactor);
-//        System.out.println("joined factor: ");
-//
-//        Factor joinedFactor = MFactor.join(JFactor);
-//        System.out.println(joinedFactor);
-//
-//        System.out.println("Eliminating A: ");
-//        Factor eliminateA = joinedFactor.eliminateHidden("A");
-//        System.out.println(eliminateA);
-//
-//        System.out.println("normalized: ");
-//        eliminateA.normalize();
-//        System.out.println(eliminateA);
 
+        //checking input2
+        // Path to the XML file
+        inputParser parser2 = new inputParser();
+        parser2.parseFile("input2.txt");
+
+        BayesianNetwork bn2 = NetworkBuilder.XML_to_Network((parser2.getXmlFileName()));
+        bn2.printNetwork();
+
+        // Write the output string to a file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("output2.txt"))) {
+            for (Query query : parser2.getQueries()) {
+                if (query instanceof BQuery) {
+                    BQuery bQuery = (BQuery) query;
+                    String output = BayesBall.isIndependent(bn2, bQuery);
+                    writer.write(output + "\n");
+                    // Process BQuery
+                } else if (query instanceof VEQuery) {
+                    VEQuery veQuery = (VEQuery) query;
+                    String output = VariableElimination.VE(veQuery, bn2);
+                    writer.write(output+ "\n");
+                    // Process VEQuery
+                    System.out.println("Variable Elimination Query: " + veQuery);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //checking input3
+        // Path to the XML file
+        inputParser parser3 = new inputParser();
+        parser3.parseFile("input3.txt");
+
+        System.out.println(parser3.getXmlFileName());
+        BayesianNetwork bn3 = NetworkBuilder.XML_to_Network((parser3.getXmlFileName()));
+        bn3.printNetwork();
+
+        // Write the output string to a file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("output3.txt"))) {
+            for (Query query : parser3.getQueries()) {
+                if (query instanceof BQuery) {
+                    BQuery bQuery = (BQuery) query;
+                    String output = BayesBall.isIndependent(bn3, bQuery);
+                    writer.write(output + "\n");
+                    // Process BQuery
+                } else if (query instanceof VEQuery) {
+                    VEQuery veQuery = (VEQuery) query;
+                    String output = VariableElimination.VE(veQuery, bn3);
+                    writer.write(output+ "\n");
+                    // Process VEQuery
+                    System.out.println("Variable Elimination Query: " + veQuery);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 

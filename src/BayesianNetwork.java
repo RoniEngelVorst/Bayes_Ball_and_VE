@@ -77,6 +77,12 @@ class BayesianNetwork {
         }
     }
 
+    public void clearFromChild(){
+        for(int i = 0; i<this.nodeList.size(); i++){
+            this.nodeList.get(i).setFromChild(false);
+        }
+    }
+
     public List<BNode> onlyAncestors(VEQuery q){
         Set<BNode> ancestors = new HashSet<>();
         BNode query = this.getNode(q.getQuery());
@@ -84,6 +90,7 @@ class BayesianNetwork {
             String key = entry.getKey();
             ancestors.add(this.getNode(key));
             ancestors.addAll(this.getNode(key).getAncestors());
+
         }
         ancestors.addAll(query.getAncestors());
         ancestors.add(query);

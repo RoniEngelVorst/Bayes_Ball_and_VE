@@ -18,6 +18,7 @@ public class BNode {
         this.parents = new ArrayList<>();
         this.cpt = new HashMap<>();
         this.isEvidence = false;
+        this.isFromChild = false;
     }
 
     public String getName() {
@@ -91,6 +92,7 @@ public class BNode {
             }
         }
     }
+
 
     public void P_To_Zero() {
         this.p = 0;
@@ -205,6 +207,21 @@ public class BNode {
             }
         });
         return sortedKeys;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BNode other = (BNode) o;
+        return Objects.equals(name, other.name) &&
+                Objects.equals(outcomes, other.outcomes) &&
+                Objects.equals(cpt, other.cpt); // Include other fields if necessary
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, outcomes, cpt); // Include other fields if necessary
     }
 }
 
