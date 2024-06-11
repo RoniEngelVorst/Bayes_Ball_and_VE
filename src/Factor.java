@@ -11,13 +11,6 @@ public class Factor implements Comparable<Factor>{
         this.cptTable = cpt;
     }
 
-    public Map<String, BNode> getVars() {
-        return vars;
-    }
-
-    public Map<Map<String, String>, Double> getCptTable() {
-        return cptTable;
-    }
 
     public double getProbability(Map<String, String> key){
         Double probability = this.cptTable.get(key);
@@ -39,6 +32,7 @@ public class Factor implements Comparable<Factor>{
         return this.vars.containsKey(h);
     }
 
+    //place the given in the factor
     public Factor PlaceGiven(Map<String, String> given){
         Map<Map<String, String>, Double> newCpt = new HashMap<>();
         Map<String, BNode> newVars = new HashMap<>();
@@ -75,7 +69,7 @@ public class Factor implements Comparable<Factor>{
             }
         }
 
-        // Populate newVars with the keys from the new CPT
+        // add to newVars the keys from the new CPT
         for (Map.Entry<Map<String, String>, Double> newOuterEntry : newCpt.entrySet()) {
             for (String key : newOuterEntry.getKey().keySet()) {
                 newVars.put(key, this.vars.get(key));
@@ -99,26 +93,24 @@ public class Factor implements Comparable<Factor>{
     }
 
 
-public Factor join(Factor otherFactor) {
-    Map<String, BNode> newVars = new HashMap<>(this.vars);
-    newVars.putAll(otherFactor.vars);
+    public Factor join(Factor otherFactor) {
+        Map<String, BNode> newVars = new HashMap<>(this.vars);
+        newVars.putAll(otherFactor.vars);
 
-    Map<Map<String, String>, Double> newCptTable = new HashMap<>();
+        Map<Map<String, String>, Double> newCptTable = new HashMap<>();
 
-    for (Map.Entry<Map<String, String>, Double> entryA : this.cptTable.entrySet()) {
-        for (Map.Entry<Map<String, String>, Double> entryB : otherFactor.cptTable.entrySet()) {
-            if (areCompatibleAssignments(entryA.getKey(), entryB.getKey())) {
-                Map<String, String> combinedAssignment = combineAssignments(entryA.getKey(), entryB.getKey());
-//                double combinedProbability = entryA.getValue() * entryB.getValue();
-//                newCptTable.put(combinedAssignment, combinedProbability);
-                BigDecimal combinedProbability = BigDecimal.valueOf(entryA.getValue()).multiply(BigDecimal.valueOf(entryB.getValue()));
-                newCptTable.put(combinedAssignment, combinedProbability.doubleValue());
+        for (Map.Entry<Map<String, String>, Double> entryA : this.cptTable.entrySet()) {
+            for (Map.Entry<Map<String, String>, Double> entryB : otherFactor.cptTable.entrySet()) {
+                if (areCompatibleAssignments(entryA.getKey(), entryB.getKey())) {
+                    Map<String, String> combinedAssignment = combineAssignments(entryA.getKey(), entryB.getKey());
+                    BigDecimal combinedProbability = BigDecimal.valueOf(entryA.getValue()).multiply(BigDecimal.valueOf(entryB.getValue()));
+                    newCptTable.put(combinedAssignment, combinedProbability.doubleValue());
+                }
             }
         }
-    }
 
-    return new Factor(newVars, newCptTable);
-}
+        return new Factor(newVars, newCptTable);
+    }
 
     // Helper method to check if two assignments are compatible (have the same values for shared variables)
     private boolean areCompatibleAssignments(Map<String, String> assignmentA, Map<String, String> assignmentB) {
@@ -149,7 +141,6 @@ public Factor join(Factor otherFactor) {
         for (Map.Entry<Map<String, String>, Double> entry : this.cptTable.entrySet()) {
             Map<String, String> key = entry.getKey();
             key.remove(h);
-//            newCpt.put(key, newCpt.getOrDefault(key, 0d) + entry.getValue());
             if (newCpt.containsKey(key)) {
                 newCpt.put(key, newCpt.get(key) + entry.getValue());
                 sumOperations++; // Increment the counter for each summation
@@ -157,7 +148,7 @@ public Factor join(Factor otherFactor) {
                 newCpt.put(key, entry.getValue());
             }
         }
-        System.out.println(sumOperations);
+//        System.out.println(sumOperations);
         return new Factor(newVars, newCpt);
     }
 

@@ -9,30 +9,30 @@ public class NetworkBuilder {
     int p = 0;
     Map<Map<String ,String>, Double> cptTable = new HashMap<>();
 
-    public void CreateCptTable(List<BNode> variables, List<Double> probs, List<String> possibleOutcomes) {
-
-        if(variables.size() == probs.size()){
-            Map<String, String> key = new HashMap<>();
-
-            for(int i = 0; i< variables.size(); i++){
-                key.put(variables.get(i).getName(), possibleOutcomes.get(i));
-            }
-            cptTable.put(key, probs.get(p));
-
-            System.out.println("variable: "+ variables + ", value: " + probs.get(p));
-            p++;
-            return;
-        }
-        BNode var = variables.get(possibleOutcomes.size());
-        for(int i = 0; i<var.getOutcomes().size(); i++){
-            possibleOutcomes.add(var.getOutcomes().get(i));
-            CreateCptTable(variables, probs, possibleOutcomes);
-            possibleOutcomes.removeLast();
-
-        }
-
-
-    }
+//    public void CreateCptTable(List<BNode> variables, List<Double> probs, List<String> possibleOutcomes) {
+//
+//        if(variables.size() == probs.size()){
+//            Map<String, String> key = new HashMap<>();
+//
+//            for(int i = 0; i< variables.size(); i++){
+//                key.put(variables.get(i).getName(), possibleOutcomes.get(i));
+//            }
+//            cptTable.put(key, probs.get(p));
+//
+//            System.out.println("variable: "+ variables + ", value: " + probs.get(p));
+//            p++;
+//            return;
+//        }
+//        BNode var = variables.get(possibleOutcomes.size());
+//        for(int i = 0; i<var.getOutcomes().size(); i++){
+//            possibleOutcomes.add(var.getOutcomes().get(i));
+//            CreateCptTable(variables, probs, possibleOutcomes);
+//            possibleOutcomes.removeLast();
+//
+//        }
+//
+//
+//    }
 
     public static BayesianNetwork XML_to_Network(String filePath){
         BayesianNetwork bn = new BayesianNetwork();
