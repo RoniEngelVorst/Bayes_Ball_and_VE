@@ -72,7 +72,7 @@ public class VariableElimination {
 
             //eliminate h from the result factor
             Factor eliminatedFactor = joinedFactor.eliminateHidden(h);
-            int sumActs = eliminatedFactor.getSize();
+            int sumActs = joinedFactor.getSize() - eliminatedFactor.getSize();
             sumCounter = sumCounter + sumActs;
 
             toLoopFactors.add(eliminatedFactor);
@@ -93,7 +93,8 @@ public class VariableElimination {
 
         //normalizing the final factor
         resultFactor.normalize();
-        sumCounter++;
+        sumCounter = sumCounter + resultFactor.getSize() - 1;
+
 
         Map<String, String> key = new HashMap<>();
         key.put(q.getQuery(), q.isQueryValue());

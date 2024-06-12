@@ -135,7 +135,6 @@ public class Factor implements Comparable<Factor>{
     public Factor eliminateHidden(String h){
         Map<Map<String, String>, Double> newCpt = new HashMap<>();
         Map<String, BNode> newVars = this.vars;
-        int sumOperations = 0;
 
         newVars.remove(h);
         for (Map.Entry<Map<String, String>, Double> entry : this.cptTable.entrySet()) {
@@ -143,12 +142,11 @@ public class Factor implements Comparable<Factor>{
             key.remove(h);
             if (newCpt.containsKey(key)) {
                 newCpt.put(key, newCpt.get(key) + entry.getValue());
-                sumOperations++; // Increment the counter for each summation
             } else {
                 newCpt.put(key, entry.getValue());
             }
         }
-//        System.out.println(sumOperations);
+
         return new Factor(newVars, newCpt);
     }
 
